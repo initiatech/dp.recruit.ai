@@ -13,9 +13,10 @@ final class CreateHeatScoresTable extends AbstractMigration
             'engine' => 'InnoDB',
             'encoding' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
+            'signed' => false,
         ]);
 
-        $table->addColumn('conversation_id', 'char', ['limit' => 36, 'null' => false])
+        $table->addColumn('conversation_id', 'uuid', ['null' => false])
               ->addColumn('score', 'integer', ['null' => false])
               ->addColumn('breakdown_json', 'json', ['null' => false])
               ->addColumn('rubric_json', 'json', ['null' => true])

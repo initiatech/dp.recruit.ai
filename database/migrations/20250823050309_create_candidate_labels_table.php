@@ -15,8 +15,8 @@ final class CreateCandidateLabelsTable extends AbstractMigration
             'collation' => 'utf8mb4_unicode_ci',
         ]);
 
-        $table->addColumn('candidate_id', 'integer', ['null' => false])
-              ->addColumn('label_id', 'integer', ['null' => false])
+        $table->addColumn('candidate_id', 'integer', ['null' => false, 'signed' => false])
+              ->addColumn('label_id', 'integer', ['null' => false, 'signed' => false])
               ->addForeignKey('candidate_id', 'candidates', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_cand_label_cand_id'])
               ->addForeignKey('label_id', 'labels', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_cand_label_label_id'])
               ->addIndex(['label_id']) // Also index the other part of the key

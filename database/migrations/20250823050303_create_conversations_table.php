@@ -15,9 +15,9 @@ final class CreateConversationsTable extends AbstractMigration
             'collation' => 'utf8mb4_unicode_ci',
         ]);
 
-        $table->addColumn('id', 'char', ['limit' => 36, 'null' => false])
-              ->addColumn('candidate_id', 'integer', ['null' => false])
-              ->addColumn('job_id', 'integer', ['null' => false])
+        $table->addColumn('id', 'uuid', ['null' => false])
+              ->addColumn('candidate_id', 'integer', ['null' => false, 'signed' => false])
+              ->addColumn('job_id', 'integer', ['null' => false, 'signed' => false])
               ->addColumn('status', 'enum', [
                   'values' => ['new', 'in_interview', 'completed', 'accepted', 'rejected', 'more_info'],
                   'default' => 'new',

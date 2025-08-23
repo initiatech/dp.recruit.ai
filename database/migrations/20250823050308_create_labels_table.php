@@ -13,9 +13,10 @@ final class CreateLabelsTable extends AbstractMigration
             'engine' => 'InnoDB',
             'encoding' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
+            'signed' => false,
         ]);
 
-        $table->addColumn('org_id', 'integer', ['null' => true, 'comment' => 'Reserved for multi-tenant support'])
+        $table->addColumn('org_id', 'integer', ['null' => true, 'signed' => false, 'comment' => 'Reserved for multi-tenant support'])
               ->addColumn('name', 'string', ['limit' => 60, 'null' => false])
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])
               ->addIndex(['name', 'org_id'], ['unique' => true, 'name' => 'uniq_label_name_org'])

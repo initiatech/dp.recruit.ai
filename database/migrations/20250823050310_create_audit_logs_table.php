@@ -13,9 +13,10 @@ final class CreateAuditLogsTable extends AbstractMigration
             'engine' => 'InnoDB',
             'encoding' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
+            'signed' => false,
         ]);
 
-        $table->addColumn('actor_user_id', 'integer', ['null' => true])
+        $table->addColumn('actor_user_id', 'integer', ['null' => true, 'signed' => false])
               ->addColumn('entity_type', 'string', ['limit' => 50, 'null' => false])
               ->addColumn('entity_id', 'string', ['limit' => 64, 'null' => false])
               ->addColumn('action', 'string', ['limit' => 50, 'null' => false])

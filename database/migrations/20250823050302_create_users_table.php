@@ -13,9 +13,10 @@ final class CreateUsersTable extends AbstractMigration
             'engine' => 'InnoDB',
             'encoding' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
+            'signed' => false,
         ]);
 
-        $table->addColumn('org_id', 'integer', ['null' => true, 'comment' => 'Reserved for multi-tenant support'])
+        $table->addColumn('org_id', 'integer', ['null' => true, 'signed' => false, 'comment' => 'Reserved for multi-tenant support'])
               ->addColumn('full_name', 'string', ['limit' => 150, 'null' => false])
               ->addColumn('email', 'string', ['limit' => 190, 'null' => false])
               ->addColumn('role', 'enum', ['values' => ['admin', 'recruiter', 'viewer'], 'default' => 'recruiter', 'null' => false])

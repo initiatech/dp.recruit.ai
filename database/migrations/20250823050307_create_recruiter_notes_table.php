@@ -13,10 +13,11 @@ final class CreateRecruiterNotesTable extends AbstractMigration
             'engine' => 'InnoDB',
             'encoding' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
+            'signed' => false,
         ]);
 
-        $table->addColumn('conversation_id', 'char', ['limit' => 36, 'null' => false])
-              ->addColumn('user_id', 'integer', ['null' => false])
+        $table->addColumn('conversation_id', 'uuid', ['null' => false])
+              ->addColumn('user_id', 'integer', ['null' => false, 'signed' => false])
               ->addColumn('note', 'text', ['null' => false])
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])
               ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_notes_conv_id'])

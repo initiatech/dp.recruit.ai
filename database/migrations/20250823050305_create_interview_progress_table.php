@@ -13,9 +13,10 @@ final class CreateInterviewProgressTable extends AbstractMigration
             'engine' => 'InnoDB',
             'encoding' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
+            'signed' => false,
         ]);
 
-        $table->addColumn('conversation_id', 'char', ['limit' => 36, 'null' => false])
+        $table->addColumn('conversation_id', 'uuid', ['null' => false])
               ->addColumn('field_key', 'string', ['limit' => 100, 'null' => false])
               ->addColumn('field_value', 'json', ['null' => true])
               ->addColumn('collected_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])

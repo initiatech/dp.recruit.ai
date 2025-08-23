@@ -13,9 +13,10 @@ final class CreateMessagesTable extends AbstractMigration
             'engine' => 'InnoDB',
             'encoding' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
+            'signed' => false,
         ]);
 
-        $table->addColumn('conversation_id', 'char', ['limit' => 36, 'null' => false])
+        $table->addColumn('conversation_id', 'uuid', ['null' => false])
               ->addColumn('sender', 'enum', ['values' => ['candidate', 'ai', 'system'], 'null' => false])
               ->addColumn('content_text', 'text', ['limit' => \Phinx\Db\Adapter\MysqlAdapter::TEXT_MEDIUM, 'null' => true])
               ->addColumn('content_audio_url', 'string', ['limit' => 255, 'null' => true])

@@ -13,6 +13,7 @@ final class CreateJobsTable extends AbstractMigration
             'engine' => 'InnoDB',
             'encoding' => 'utf8mb4',
             'collation' => 'utf8mb4_unicode_ci',
+            'signed' => false,
         ]);
 
         $table->addColumn('title', 'string', ['limit' => 150, 'null' => false])
