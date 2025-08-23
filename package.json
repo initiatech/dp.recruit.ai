@@ -1,0 +1,17 @@
+{
+  "name": "recruiter-ai-monorepo",
+  "private": true,
+  "workspaces": [
+    "app",
+    "admin"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=app & npm run dev --workspace=admin",
+    "build": "npm run build --workspaces",
+    "test": "npm test --workspaces"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "vite": "^5.0.0"
+  }
+}

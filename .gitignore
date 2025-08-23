@@ -1,0 +1,34 @@
+# Composer
+/vendor/
+composer.lock
+
+# Node
+/node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+/public/build/
+/app/dist/
+/admin/dist/
+
+# Logs
+*.log
+/logs/
+
+# Test artifacts
+/coverage/
+/tests/reports/
+/tests/_output/
+.phpunit.result.cache
