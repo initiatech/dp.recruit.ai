@@ -16,7 +16,7 @@ final class CreateMessagesTable extends AbstractMigration
             'signed' => false,
         ]);
 
-        $table->addColumn('conversation_id', 'uuid', ['null' => false])
+        $table->addColumn('conversation_id', 'string', ['limit' => 36, 'null' => false, 'collation' => 'utf8mb4_bin'])
               ->addColumn('sender', 'enum', ['values' => ['candidate', 'ai', 'system'], 'null' => false])
               ->addColumn('content_text', 'text', ['limit' => \Phinx\Db\Adapter\MysqlAdapter::TEXT_MEDIUM, 'null' => true])
               ->addColumn('content_audio_url', 'string', ['limit' => 255, 'null' => true])
@@ -25,7 +25,7 @@ final class CreateMessagesTable extends AbstractMigration
               ->addColumn('barge_in', 'boolean', ['default' => false, 'null' => false])
               ->addColumn('confidence', 'decimal', ['precision' => 3, 'scale' => 2, 'null' => true])
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])
-              ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_messages_conv_id'])
+              ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'CASCADE', 'constraint' => 'fk_messages_conv_id'])
               ->addIndex(['conversation_id'])
               ->addIndex(['created_at'])
               ->create();

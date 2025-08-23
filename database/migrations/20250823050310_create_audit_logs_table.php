@@ -23,7 +23,7 @@ final class CreateAuditLogsTable extends AbstractMigration
               ->addColumn('before_json', 'json', ['null' => true])
               ->addColumn('after_json', 'json', ['null' => true])
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])
-              ->addForeignKey('actor_user_id', 'users', 'id', ['delete'=> 'SET_NULL', 'update'=> 'NO_ACTION', 'constraint' => 'fk_audit_actor_id'])
+              ->addForeignKey('actor_user_id', 'users', 'id', ['delete'=> 'SET_NULL', 'update'=> 'CASCADE', 'constraint' => 'fk_audit_actor_id'])
               ->addIndex(['entity_type', 'entity_id'])
               ->addIndex(['actor_user_id'])
               ->addIndex(['created_at'])

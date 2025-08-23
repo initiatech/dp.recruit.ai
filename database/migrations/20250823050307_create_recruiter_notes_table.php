@@ -16,12 +16,12 @@ final class CreateRecruiterNotesTable extends AbstractMigration
             'signed' => false,
         ]);
 
-        $table->addColumn('conversation_id', 'uuid', ['null' => false])
+        $table->addColumn('conversation_id', 'string', ['limit' => 36, 'null' => false, 'collation' => 'utf8mb4_bin'])
               ->addColumn('user_id', 'integer', ['null' => false, 'signed' => false])
               ->addColumn('note', 'text', ['null' => false])
               ->addColumn('created_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])
-              ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_notes_conv_id'])
-              ->addForeignKey('user_id', 'users', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_notes_user_id'])
+              ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'CASCADE', 'constraint' => 'fk_notes_conv_id'])
+              ->addForeignKey('user_id', 'users', 'id', ['delete'=> 'CASCADE', 'update'=> 'CASCADE', 'constraint' => 'fk_notes_user_id'])
               ->addIndex(['conversation_id'])
               ->addIndex(['user_id'])
               ->create();

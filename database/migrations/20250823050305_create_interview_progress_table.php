@@ -16,11 +16,11 @@ final class CreateInterviewProgressTable extends AbstractMigration
             'signed' => false,
         ]);
 
-        $table->addColumn('conversation_id', 'uuid', ['null' => false])
+        $table->addColumn('conversation_id', 'string', ['limit' => 36, 'null' => false, 'collation' => 'utf8mb4_bin'])
               ->addColumn('field_key', 'string', ['limit' => 100, 'null' => false])
               ->addColumn('field_value', 'json', ['null' => true])
               ->addColumn('collected_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])
-              ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_progress_conv_id'])
+              ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'CASCADE', 'constraint' => 'fk_progress_conv_id'])
               ->addIndex(['conversation_id', 'field_key'])
               ->create();
     }

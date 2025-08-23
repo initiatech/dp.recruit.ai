@@ -16,12 +16,12 @@ final class CreateHeatScoresTable extends AbstractMigration
             'signed' => false,
         ]);
 
-        $table->addColumn('conversation_id', 'uuid', ['null' => false])
+        $table->addColumn('conversation_id', 'string', ['limit' => 36, 'null' => false, 'collation' => 'utf8mb4_bin'])
               ->addColumn('score', 'integer', ['null' => false])
               ->addColumn('breakdown_json', 'json', ['null' => false])
               ->addColumn('rubric_json', 'json', ['null' => true])
               ->addColumn('calculated_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])
-              ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_heat_scores_conv_id'])
+              ->addForeignKey('conversation_id', 'conversations', 'id', ['delete'=> 'CASCADE', 'update'=> 'CASCADE', 'constraint' => 'fk_heat_scores_conv_id'])
               ->addIndex(['conversation_id'], ['unique' => true, 'name' => 'uniq_heat_once'])
               ->create();
     }

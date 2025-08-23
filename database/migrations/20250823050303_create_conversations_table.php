@@ -15,7 +15,7 @@ final class CreateConversationsTable extends AbstractMigration
             'collation' => 'utf8mb4_unicode_ci',
         ]);
 
-        $table->addColumn('id', 'uuid', ['null' => false])
+        $table->addColumn('id', 'string', ['limit' => 36, 'null' => false, 'collation' => 'utf8mb4_bin'])
               ->addColumn('candidate_id', 'integer', ['null' => false, 'signed' => false])
               ->addColumn('job_id', 'integer', ['null' => false, 'signed' => false])
               ->addColumn('status', 'enum', [
@@ -25,8 +25,8 @@ final class CreateConversationsTable extends AbstractMigration
               ])
               ->addColumn('started_at', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => ''])
               ->addColumn('closed_at', 'timestamp', ['null' => true])
-              ->addForeignKey('candidate_id', 'candidates', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_conv_candidate_id'])
-              ->addForeignKey('job_id', 'jobs', 'id', ['delete'=> 'CASCADE', 'update'=> 'NO_ACTION', 'constraint' => 'fk_conv_job_id'])
+              ->addForeignKey('candidate_id', 'candidates', 'id', ['delete'=> 'CASCADE', 'update'=> 'CASCADE', 'constraint' => 'fk_conv_candidate_id'])
+              ->addForeignKey('job_id', 'jobs', 'id', ['delete'=> 'CASCADE', 'update'=> 'CASCADE', 'constraint' => 'fk_conv_job_id'])
               ->addIndex(['candidate_id'])
               ->addIndex(['job_id'])
               ->addIndex(['status'])
