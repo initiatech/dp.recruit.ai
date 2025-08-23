@@ -35,6 +35,28 @@
     ```
     יש לערוך את קובץ ה-`.env` ולהגדיר את פרטי ההתחברות למסד הנתונים, מפתחות API וכו'.
 
+### הקמת מסד הנתונים (מתוך קבצי SQL)
+
+לאחר יצירת מסד נתונים ריק והגדרת פרטי הגישה אליו בקובץ ה-`.env`, יש לייבא את מבנה הטבלאות והמידע הראשוני.
+
+**שימוש ב-MySQL CLI:**
+
+```bash
+# ייבוא מבנה הטבלאות
+mysql -u your_user -p your_database < database/dumps/schema.sql
+
+# ייבוא מידע ראשוני
+mysql -u your_user -p your_database < database/dumps/seed.sql
+```
+*יש להחליף את `your_user` ו-`your_database` בפרטים הנכונים.*
+
+**שימוש ב-phpMyAdmin:**
+
+1.  בחר את מסד הנתונים שלך מהרשימה בצד שמאל.
+2.  עבור ללשונית "Import".
+3.  לחץ על "Choose File" ובחר את הקובץ `database/dumps/schema.sql`. לחץ על "Go".
+4.  חזור על התהליך עבור הקובץ `database/dumps/seed.sql`.
+
 ### הרצת שרת הפיתוח
 
 שרת ה-PHP המובנה:
