@@ -1,0 +1,22 @@
+# Fallback job profile for when no specific job is selected or found.
+# This ensures the AI can still conduct a meaningful general screening interview.
+# The keys here should correspond to the columns in the 'jobs' table.
+
+title: "משרה כללית"
+description: "שיחה כללית לבחינת התאמה לתפקידים עתידיים בחברה."
+heat_threshold: 70
+
+# The `required_fields` key contains a map of field_key -> question_prompt.
+# The service layer will be responsible for JSON encoding this structure
+# for the `required_fields_json` database column.
+required_fields:
+  summary: "ספר/י לי על עצמך בכמה משפטים."
+  experience_years: "כמה שנות נסיון יש לך בתחום המרכזי שלך?"
+  core_skills: "מהן שלוש המיומנויות המרכזיות שלך?"
+  availability: "מתי תהיה/י פנוי/ה להתחיל תפקיד חדש?"
+  work_mode: "איזה מודל עבודה את/ה מחפש/ת? (משרדי, היברידי, מרחוק)"
+  salary_expectation: "מהן ציפיות השכר שלך למשרה מלאה?"
+
+must_have: []
+nice_to_have: []
+block_rules: []

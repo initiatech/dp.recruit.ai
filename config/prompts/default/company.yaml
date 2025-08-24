@@ -1,0 +1,11 @@
+# Company-specific information and placeholders
+# This file can be overridden for different departments or brands.
+
+name: "חברה לדוגמה בע\"מ"
+brand_tone: "ידידותי ומקצועי"
+values:
+  - "חדשנות"
+  - "מצוינות"
+  - "עבודת צוות"
+legal_notes: "הראיון מוקלט ומהווה שלב ראשוני בלבד. המידע יישמר במערכות החברה בהתאם למדיניות הפרטיות."
+privacy_notice_url: "https://example.com/privacy"

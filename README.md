@@ -57,6 +57,18 @@ mysql -u your_user -p your_database < database/dumps/seed.sql
 3.  לחץ על "Choose File" ובחר את הקובץ `database/dumps/schema.sql`. לחץ על "Go".
 4.  חזור על התהליך עבור הקובץ `database/dumps/seed.sql`.
 
+**חלופה: שימוש ב-Phinx Migrations (למפתחים):**
+
+כחלופה לייבוא ישיר, ניתן להשתמש בכלי המיגרציות Phinx כדי לבנות את מסד הנתונים. זוהי הדרך המומלצת לפיתוח שוטף, מכיוון שהיא מאפשרת ניהול גרסאות של סכמת מסד הנתונים.
+
+```bash
+# הרצת כל המיגרציות ליצירת הטבלאות
+./vendor/bin/phinx migrate -e development
+
+# הרצת כל הסידרים למילוי מידע ראשוני
+./vendor/bin/phinx seed:run -e development
+```
+
 ### הרצת שרת הפיתוח
 
 שרת ה-PHP המובנה:
