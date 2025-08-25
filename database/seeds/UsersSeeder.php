@@ -8,8 +8,10 @@ class UsersSeeder extends AbstractSeed
 {
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0');
+
         $table = $this->table('users');
-        $table->truncate(); // Use truncate for efficiency in seeders
+        $table->truncate();
 
         $data = [
             [
@@ -31,5 +33,7 @@ class UsersSeeder extends AbstractSeed
         ];
 
         $table->insert($data)->saveData();
+
+        $this->execute('SET FOREIGN_KEY_CHECKS=1');
     }
 }

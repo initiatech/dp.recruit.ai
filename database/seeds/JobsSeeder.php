@@ -8,6 +8,8 @@ class JobsSeeder extends AbstractSeed
 {
     public function run(): void
     {
+        $this->execute('SET FOREIGN_KEY_CHECKS=0');
+
         $table = $this->table('jobs');
         $table->truncate();
 
@@ -33,5 +35,7 @@ class JobsSeeder extends AbstractSeed
         ];
 
         $table->insert($data)->saveData();
+
+        $this->execute('SET FOREIGN_KEY_CHECKS=1');
     }
 }
