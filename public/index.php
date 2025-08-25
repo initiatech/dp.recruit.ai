@@ -2,58 +2,54 @@
 
 declare(strict_types=1);
 
-// Set the content type to JSON for all responses
-header("Content-Type: application/json; charset=UTF-8");
+// This is the single entry point to the application.
 
-// Autoload dependencies
+// 1. Autoload dependencies
 require_once __DIR__ . '/../vendor/autoload.php';
 
-// Load environment variables
+// 2. Load environment variables
 try {
-    $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
+    $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
     $dotenv->load();
 } catch (\Dotenv\Exception\InvalidPathException $e) {
-    // This will happen in a CI environment where .env file might not be present
-    // We can ignore this error and rely on environment variables set directly
+    // It's okay if .env file is not present, we can rely on server-level env vars.
 }
 
-// Basic router
-$requestUri = $_SERVER['REQUEST_URI'];
-$requestMethod = $_SERVER['REQUEST_METHOD'];
+// 3. Global Error and Exception Handling
+use App\Core\Response;
 
-// Remove query string from URI
-if (false !== $pos = strpos($requestUri, '?')) {
-    $requestUri = substr($requestUri, 0, $pos);
-}
-$requestUri = rawurldecode($requestUri);
+set_exception_handler(function (\Throwable $exception) {
+    // In a real app, you would log the full exception details.
+    // error_log($exception->getMessage() . "\n" . $exception->getTraceAsString());
 
-switch ($requestUri) {
-    case '/healthz':
-        if ($requestMethod === 'GET') {
-            http_response_code(200);
-            echo json_encode(['status' => 'ok', 'timestamp' => date('c')]);
-        } else {
-            http_response_code(405);
-            echo json_encode(['error' => 'Method Not Allowed']);
-        }
-        break;
+    // For the client, send a generic server error response.
+    // In dev mode, you might want to send more details.
+    $message = ($_ENV['APP_ENV'] === 'dev') ? $exception->getMessage() : 'An internal server error occurred.';
+    Response::error($message, 500, 'SERVER_ERROR')->send();
+});
 
-    case '/config/public':
-        if ($requestMethod === 'GET') {
-            http_response_code(200);
-            echo json_encode([
-                'voice_enabled' => filter_var($_ENV['VOICE_ENABLED'] ?? 'false', FILTER_VALIDATE_BOOLEAN),
-                'ai_streaming' => filter_var($_ENV['AI_STREAMING'] ?? 'false', FILTER_VALIDATE_BOOLEAN),
-                'app_name' => 'Recruiter-AI',
-            ]);
-        } else {
-            http_response_code(405);
-            echo json_encode(['error' => 'Method Not Allowed']);
-        }
-        break;
+// 4. Define and dispatch routes
+use App\Core\Request;
+use App\Core\Router;
+use App\Controllers\AppController;
+use App\Controllers\CandidatesController;
+use App\Controllers\JobsController;
+use App\Controllers\ConversationsController;
 
-    default:
-        http_response_code(404);
-        echo json_encode(['error' => 'Not Found']);
-        break;
-}
+$router = new Router();
+
+// == App routes ==
+$router->get('/healthz', [AppController::class, 'healthz']);
+$router->get('/version', [AppController::class, 'version']);
+$router->get('/metrics', [AppController::class, 'metrics']);
+$router->get('/config/runtime', [AppController::class, 'config']);
+
+// == API routes ==
+$router->post('/candidates', [CandidatesController::class, 'create']);
+$router->post('/jobs', [JobsController::class, 'create']);
+$router->post('/conversations', [ConversationsController::class, 'create']);
+$router->get('/conversations/{id}', [ConversationsController::class, 'getOne']);
+
+// 5. Create request object from globals and dispatch
+$request = Request::createFromGlobals();
+$router->dispatch($request);
